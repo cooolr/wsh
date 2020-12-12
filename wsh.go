@@ -29,7 +29,7 @@ import (
 )
 
 func init() {
-	fmt.Println("")
+	//fmt.Println("")
 	usr, err := user.Current()
 	if err != nil {
 		fmt.Println(err)
@@ -76,7 +76,12 @@ func main() {
 	// Setting up exec options
 	cmd := exec.Command(shellpath, "-l")
 	cmd.Stdout = os.Stdout
-	cmd.Stdin = os.Stdin
+	// Getting os.Args input
+        if count := len(os.Args);count > 1 {
+	        cmd.Stdin = strings.NewReader(os.Args[1])
+	} else {
+	        cmd.Stdin = os.Stdin
+        }
 	cmd.Stderr = pw
 	wg.Add(1)
 	// Running cmd!
